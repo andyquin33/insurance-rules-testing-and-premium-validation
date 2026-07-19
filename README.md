@@ -27,19 +27,17 @@ I created a synthetic rate book containing the rules and factors used to calcula
 - Organization discount
 - An effective-date rate change
 
-I then created 1,000 synthetic policies with different combinations of these characteristics.
+I then created 1,000 test cases with different combinations of these characteristics.
 
-To build the test population, I used Excel’s `CHOOSE` function together with random-number formulas to assign values to each policy. After generating the policies, I copied and pasted the results as values so the test cases would remain fixed instead of changing whenever Excel recalculated.
+To build the test cases, I used Excel’s `CHOOSE` function together with random-number formulas to assign values to each policy. After generating the test cases, I copied and pasted the results as values so the test cases would remain fixed instead of changing whenever Excel recalculated.
 
-For each policy, the workbook calculates an expected premium using the rate book and compares it with a simulated system-generated premium. Each test case is marked as PASS or FAIL based on the difference between the two premiums.
+For each test case, I calculated the expected premium using the rate book and compared it with the system-generated premium. Each test case is marked as PASS or FAIL based on whether there is a discrepancy between the two premiums.
 
 Failed cases are grouped by their likely cause and added to an issue log with a recommended action.
 
 [Download the Excel workbook](Insurance%20Product%20Rules%20Testing%20and%20Premium%20Validation%20Project.xlsx)
 
 ![Project Overview](premium-validation-screenshots/01_project_overview.png)
-
-*The workbook is organized into six tabs: Project Overview, Rate Book, Test Cases, Premium Validation, QA Summary, and Issue Log.*
 
 ## Why I Built This Project
 
@@ -49,17 +47,15 @@ The position involved responsibilities such as reviewing rating rules, testing s
 
 I later made the project more general so it could also show skills that apply to actuarial analyst, actuarial technician, insurance systems, quality assurance, and illustrations systems analyst positions.
 
-The rates, policies, system results, and issues in this project are completely synthetic. They do not represent the actual rates, systems, or pricing methods used by AAA or any other insurance company.
-
 ## Main Question
 
-Does the simulated rating system apply the correct base rate, rating factor, discount, coverage rule, and effective-date change to each policy?
+Does the rating system apply the correct base rate, rating factor, discount, coverage rule, and effective-date change to each policy?
 
 ## How the Project Works
 
 1. The **Rate Book** stores the base rates, rating factors, discounts, and coverage rules.
 2. The **Test Cases** tab contains 1,000 synthetic policy scenarios.
-3. The test population is frozen as values so the policies remain unchanged during testing.
+3. The test cases are frozen as values so the policies remain unchanged during testing.
 4. The policies are carried into the **Premium Validation** tab.
 5. The applicable base rate and rating factors are retrieved for each policy.
 6. An expected premium is calculated independently.
@@ -87,23 +83,21 @@ The final section includes additional vehicle factors, coverage base rates, dedu
 
 ## Test Case Creation
 
-The Test Cases tab contains the original population of 1,000 synthetic policies.
+The Test Cases tab contains the 1,000 test cases.
 
-Each row represents a different policy scenario with its own effective date, coverage, driver information, vehicle information, location, deductible, limit, and discount selections.
+Each row represents a different test case with its own effective date, coverage, driver information, vehicle information, location, deductible, limit, and discount selections.
 
-I used the `CHOOSE` function with random-number formulas to generate different combinations of policy characteristics. This made it possible to create a large and varied test population without manually entering every field.
+I used the `CHOOSE` function with random-number formulas to generate different combinations of policy characteristics. This made it possible to create a large and varied set of test cases without manually entering every field.
 
-Once the policies were generated, I copied the results and pasted them as values. This step was important because otherwise the test cases would change whenever Excel recalculated, making the validation results difficult to reproduce.
+Once the test cases were generated, I copied the results and pasted them as values. This step was important because otherwise the test cases would change whenever Excel recalculated.
 
 ![Test Cases](premium-validation-screenshots/05_test_cases_sample.png)
-
-*This screenshot shows a sample of the 1,000 fixed test policies. Additional policy fields continue to the right in the workbook.*
 
 ## Premium Calculation
 
 The expected premium is calculated by starting with the coverage base rate and multiplying it by the factors that apply to the policy.
 
-In simplified form:
+General formula:
 
 ```text
 Expected Premium =
@@ -119,8 +113,6 @@ Base Rate
 × Rate Change Factor
 ```
 
-A factor of `1.00` is used when a factor does not apply.
-
 The premium difference is calculated as:
 
 ```text
@@ -132,13 +124,9 @@ The Premium Validation tab retrieves the base rate and rating factors that apply
 
 ![Premium Validation Factors](premium-validation-screenshots/06_premium_validation_factors.png)
 
-*Sample of the premium validation model showing the system-generated premium, coverage base rate, and rating factors retrieved for each policy.*
-
 The workbook then compares the expected premium with the system-generated premium. Each policy receives a PASS or FAIL result, and failed cases are assigned a likely cause.
 
 ![Premium Validation Results](premium-validation-screenshots/07_premium_validation_results.png)
-
-*Sample results showing expected premiums, premium differences, PASS/FAIL outcomes, and the likely cause of failed tests.*
 
 ## Results
 
@@ -199,7 +187,7 @@ For each issue, the log includes:
 This project gave me hands-on practice with:
 
 - Excel Tables and structured references
-- `CHOOSE` and random-number formulas to create synthetic test cases
+- `CHOOSE` and random-number formulas to create test cases
 - `XLOOKUP`, `VLOOKUP`, and `INDEX/MATCH` to retrieve rates and rating factors
 - `IF` formulas for factor applicability
 - Conditional formatting to make passed and failed tests easy to identify
@@ -212,7 +200,3 @@ This project gave me hands-on practice with:
 - Issue documentation
 - Quality assurance and user acceptance testing concepts
 - Communicating testing results
-
-## Important Note
-
-All policy information, rating factors, premiums, system-generated results, and issues are synthetic. The project does not represent the actual rates, rating system, or pricing methods used by AAA or any other insurance company.
